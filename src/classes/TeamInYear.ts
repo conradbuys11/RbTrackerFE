@@ -8,14 +8,11 @@ export interface TeamInYear {
   year: Year | number;
   ofRating: number;
   dfRating: number;
-  avRating: number;
   wins: number;
   losses: number;
   ties: number;
-  record: string;
   likelyWins: number;
   likelyLosses: number;
   likelyTies: number;
-  likelyRecord: string;
   bye: Week | undefined;
 }
