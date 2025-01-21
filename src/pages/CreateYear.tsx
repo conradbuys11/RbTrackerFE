@@ -3,6 +3,8 @@ import { Team } from "../classes/Team";
 import { TeamInYear } from "../classes/TeamInYear";
 
 const CreateYear = () => {
+  const URL = "https://localhost:7242/api/Rb";
+
   const [teams, setTeams] = useState<Team[]>([]);
   const [yearNo, setYearNo] = useState<number>();
   const [teamRatings, setTeamRatings] = useState<TeamInYear[]>();
@@ -23,8 +25,32 @@ const CreateYear = () => {
     );
   };
 
+  const postYear = () => {
+    fetch(`${URL}/years`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ yearNo: yearNo }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        const teamswyear = teamRatings?.map((tr) => ({
+          ...tr,
+          yearId: Number(data.id),
+          id: 0,
+        }));
+        return fetch(`${URL}/teamsinyears/many`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(teamswyear),
+        });
+      })
+      .then((res) => res.json())
+      .then((data) => console.log(`Succeeded? ${data}`))
+      .catch((e) => console.log(e));
+  };
+
   useEffect(() => {
-    fetch("https://localhost:7242/api/Rb/teams")
+    fetch(`${URL}/teams`)
       .then((res) => res.json())
       .then((teams) => {
         console.log(teams);
@@ -56,8 +82,8 @@ const CreateYear = () => {
     setTeamRatings(
       teams.map((team) => ({
         id: team.id,
-        team: team.id,
-        year: 0,
+        teamId: team.id,
+        yearId: 0,
         ofRating: 0,
         dfRating: 0,
         wins: 0,
@@ -66,7 +92,7 @@ const CreateYear = () => {
         likelyWins: 0,
         likelyLosses: 0,
         likelyTies: 0,
-        bye: undefined,
+        byeId: undefined,
       }))
     );
   }, [teams]);
@@ -106,6 +132,7 @@ const CreateYear = () => {
           ))}
         </div>
       </form>
+      <button onClick={postYear}></button>
     </div>
   );
 };

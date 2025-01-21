@@ -1,11 +1,7 @@
-import { Team } from "./Team";
-import { Year } from "./Year";
-import { Week } from "./Week";
-
 export interface TeamInYear {
   id: number;
-  team: Team | number;
-  year: Year | number;
+  teamId: number;
+  yearId: number;
   ofRating: number;
   dfRating: number;
   wins: number;
@@ -14,5 +10,5 @@ export interface TeamInYear {
   likelyWins: number;
   likelyLosses: number;
   likelyTies: number;
-  bye: Week | undefined;
+  byeId: number | undefined;
 }
