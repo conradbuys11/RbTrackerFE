@@ -79,6 +79,7 @@ const CreateYear = ({ loaderData }: Route.ComponentProps) => {
       teams.map((team) => ({
         id: team.id,
         teamId: team.id,
+        teamName: team.name,
         yearId: 0,
         ofRating: 0,
         dfRating: 0,

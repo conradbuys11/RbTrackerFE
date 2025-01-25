@@ -1,6 +1,7 @@
 export interface TeamInYear {
   id: number;
   teamId: number;
+  teamName: string;
   yearId: number;
   ofRating: number;
   dfRating: number;
