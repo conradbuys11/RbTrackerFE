@@ -1,11 +1,36 @@
 import { useEffect, useState } from "react";
-import { Team } from "../classes/Team";
-import { TeamInYear } from "../classes/TeamInYear";
+import type { Team } from "../classes/Team";
+import type { TeamInYear } from "../classes/TeamInYear";
+import getTeams from "~/db/getTeams";
+import type { Route } from "./+types/CreateYear";
 
-const CreateYear = () => {
+export async function clientLoader() {
+  const teams = await getTeams();
+  // const teamRatings = teams.map((team) => ({
+  //   id: team.id,
+  //   teamId: team.id,
+  //   yearId: 0,
+  //   ofRating: 0,
+  //   dfRating: 0,
+  //   wins: 0,
+  //   losses: 0,
+  //   ties: 0,
+  //   likelyWins: 0,
+  //   likelyLosses: 0,
+  //   likelyTies: 0,
+  //   byeId: undefined,
+  // }));
+  return { teams };
+}
+
+export function HydrateFallback() {
+  return <div>Loading...</div>;
+}
+
+const CreateYear = ({ loaderData }: Route.ComponentProps) => {
   const URL = "https://localhost:7242/api/Rb";
 
-  const [teams, setTeams] = useState<Team[]>([]);
+  const { teams } = loaderData;
   const [yearNo, setYearNo] = useState<number>();
   const [teamRatings, setTeamRatings] = useState<TeamInYear[]>();
 
@@ -48,35 +73,6 @@ const CreateYear = () => {
       .then((data) => console.log(`Succeeded? ${data}`))
       .catch((e) => console.log(e));
   };
-
-  useEffect(() => {
-    fetch(`${URL}/teams`)
-      .then((res) => res.json())
-      .then((teams) => {
-        console.log(teams);
-        setTeams(teams);
-      });
-
-    // setTeamRatings(
-    //   teams.map((team) => ({
-    //     id: team.id,
-    //     team: team.id,
-    //     year: 0,
-    //     ofRating: 0,
-    //     dfRating: 0,
-    //     avRating: 0,
-    //     wins: 0,
-    //     losses: 0,
-    //     ties: 0,
-    //     record: "0-0",
-    //     likelyWins: 0,
-    //     likelyLosses: 0,
-    //     likelyTies: 0,
-    //     likelyRecord: "0-0",
-    //     bye: undefined,
-    //   }))
-    // );
-  }, []);
 
   useEffect(() => {
     setTeamRatings(

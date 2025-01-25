@@ -1,5 +1,5 @@
-import { Year } from "./Year";
-import { TeamInYear } from "./TeamInYear";
+import type { Year } from "./Year";
+import type { TeamInYear } from "./TeamInYear";
 
 export interface Week {
   id: number | undefined;

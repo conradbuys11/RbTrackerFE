@@ -1,4 +1,4 @@
-import { teams } from "../testdata/teams";
+import { teams } from "../data/teams";
 
 interface Props {
   key: number;
