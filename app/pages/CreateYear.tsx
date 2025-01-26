@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
-import type { Team } from "../classes/Team";
 import type { TeamInYear } from "../classes/TeamInYear";
-import getTeams from "~/db/getTeams";
+import { getTeams } from "~/db/dbFuncs";
 import type { Route } from "./+types/CreateYear";
 import type { Year } from "~/classes/Year";
 import { useNavigate } from "react-router";

@@ -31,6 +31,7 @@ const NewWeekEntry = ({ weekNo, games, teams, updateGames }: NWEProps) => {
           />
         );
       })}
+      <hr />
     </div>
   );
 };
