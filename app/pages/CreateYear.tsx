@@ -3,6 +3,13 @@ import type { Team } from "../classes/Team";
 import type { TeamInYear } from "../classes/TeamInYear";
 import getTeams from "~/db/getTeams";
 import type { Route } from "./+types/CreateYear";
+import type { Year } from "~/classes/Year";
+import { useNavigate } from "react-router";
+
+interface NavState {
+  year: Year;
+  teams: TeamInYear[];
+}
 
 export async function clientLoader() {
   const teams = await getTeams();
@@ -33,6 +40,7 @@ const CreateYear = ({ loaderData }: Route.ComponentProps) => {
   const { teams } = loaderData;
   const [yearNo, setYearNo] = useState<number>();
   const [teamRatings, setTeamRatings] = useState<TeamInYear[]>();
+  const navigate = useNavigate();
 
   const setOfRating = (teamId: number, ofRating: number) => {
     setTeamRatings(
@@ -50,14 +58,17 @@ const CreateYear = ({ loaderData }: Route.ComponentProps) => {
     );
   };
 
-  const postYear = () => {
-    fetch(`${URL}/years`, {
+  const postYear = async () => {
+    let year: Year;
+    let teams: TeamInYear[];
+    await fetch(`${URL}/years`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ yearNo: yearNo }),
     })
       .then((res) => res.json())
       .then((data) => {
+        year = { id: data.id, yearNo: data.yearNo };
         const teamswyear = teamRatings?.map((tr) => ({
           ...tr,
           yearId: Number(data.id),
@@ -70,7 +81,12 @@ const CreateYear = ({ loaderData }: Route.ComponentProps) => {
         });
       })
       .then((res) => res.json())
-      .then((data) => console.log(`Succeeded? ${data}`))
+      .then((data: TeamInYear[]) => (teams = data))
+      .then((a) =>
+        navigate("/createyearweeks", {
+          state: { year: year, teams: teams } as NavState,
+        })
+      )
       .catch((e) => console.log(e));
   };
 
@@ -129,7 +145,7 @@ const CreateYear = ({ loaderData }: Route.ComponentProps) => {
           ))}
         </div>
       </form>
-      <button onClick={postYear}></button>
+      <button onClick={postYear}>Submit?</button>
     </div>
   );
 };

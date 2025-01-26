@@ -6,8 +6,9 @@ import { GameType } from "~/enums/gameType";
 import { useEffect, useState } from "react";
 import { newWeek, type NewWeek } from "~/classes/NewWeek";
 import NewWeekEntry from "~/components/NewWeekEntry";
+import { useLocation } from "react-router";
 
-interface CYWProps {
+interface NavState {
   year: Year;
   teams: TeamInYear[];
 }
@@ -30,7 +31,10 @@ const makeGamesForWeek = (weekNo: number) => {
   return games;
 };
 
-const CreateYearWeeks = ({ year, teams }: CYWProps) => {
+const CreateYearWeeks = () => {
+  const location = useLocation();
+  const state = location.state as NavState;
+  const { year, teams } = state || {};
   const [weeks, setWeeks] = useState<NewWeek[]>([]);
 
   const updateGames = (
@@ -66,7 +70,7 @@ const CreateYearWeeks = ({ year, teams }: CYWProps) => {
       {weeks.map((week) => {
         return (
           <NewWeekEntry
-            key={week.weekNo.toString()}
+            key={"w" + week.weekNo.toString()}
             weekNo={week.weekNo}
             games={week.games}
             teams={teams}

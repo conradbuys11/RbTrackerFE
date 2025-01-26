@@ -16,7 +16,7 @@ export function newGame(
   weekNo: number
 ): NewGame {
   return {
-    id: weekNo.toString() + gameNo.toString(),
+    id: "w" + weekNo.toString() + "g" + gameNo.toString(),
     gameNo: gameNo,
     gameType: gameType,
     weekNo: weekNo,
