@@ -8,6 +8,7 @@ import { newWeek, type NewWeek } from "~/classes/NewWeek";
 import NewWeekEntry from "~/components/NewWeekEntry";
 import { useLocation } from "react-router";
 import { submitYearGames } from "~/db/dbFuncs";
+import testPopulate from "~/db/testPopulate";
 
 interface NavState {
   year: Year;
@@ -32,17 +33,6 @@ const makeGamesForWeek = (weekNo: number) => {
   return games;
 };
 
-const testPopulate = (weeks: NewWeek[], teams: TeamInYear[]) => {
-  return weeks.map((week) => ({
-    ...week,
-    games: week.games.map((game) => ({
-      ...game,
-      awayTeam: teams[0],
-      homeTeam: teams[0],
-    })),
-  }));
-};
-
 const CreateYearWeeks = () => {
   const location = useLocation();
   const state = location.state as NavState;
@@ -50,7 +40,7 @@ const CreateYearWeeks = () => {
   const [weeks, setWeeks] = useState<NewWeek[]>([]);
 
   const submit = () => {
-    submitYearGames(weeks);
+    submitYearGames(weeks, teams);
   };
 
   const updateGames = (

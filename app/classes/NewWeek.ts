@@ -6,6 +6,7 @@ export interface NewWeek {
   yearId: number | undefined;
   year: Year;
   games: NewGame[];
+  id: number | undefined;
 }
 
 export function newWeek(weekNo: number, year: Year, games: NewGame[]) {
@@ -14,6 +15,7 @@ export function newWeek(weekNo: number, year: Year, games: NewGame[]) {
     yearId: year.id,
     year: year,
     games: games,
+    id: undefined,
   };
   return newWeek;
 }
