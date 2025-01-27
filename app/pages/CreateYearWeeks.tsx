@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { newWeek, type NewWeek } from "~/classes/NewWeek";
 import NewWeekEntry from "~/components/NewWeekEntry";
 import { useLocation } from "react-router";
+import { submitYearGames } from "~/db/dbFuncs";
 
 interface NavState {
   year: Year;
@@ -31,11 +32,26 @@ const makeGamesForWeek = (weekNo: number) => {
   return games;
 };
 
+const testPopulate = (weeks: NewWeek[], teams: TeamInYear[]) => {
+  return weeks.map((week) => ({
+    ...week,
+    games: week.games.map((game) => ({
+      ...game,
+      awayTeam: teams[0],
+      homeTeam: teams[0],
+    })),
+  }));
+};
+
 const CreateYearWeeks = () => {
   const location = useLocation();
   const state = location.state as NavState;
   const { year, teams } = state || {};
   const [weeks, setWeeks] = useState<NewWeek[]>([]);
+
+  const submit = () => {
+    submitYearGames(weeks);
+  };
 
   const updateGames = (
     gameId: string,
@@ -67,6 +83,10 @@ const CreateYearWeeks = () => {
 
   return (
     <div>
+      <button onClick={() => setWeeks(testPopulate(weeks, teams))}>
+        Test Populate
+      </button>
+      <hr />
       {weeks.map((week) => {
         return (
           <NewWeekEntry
@@ -78,6 +98,8 @@ const CreateYearWeeks = () => {
           />
         );
       })}
+      {/* TODO: can only submit if everything's filled in */}
+      <button onClick={submit}>Submit?</button>
     </div>
   );
 };

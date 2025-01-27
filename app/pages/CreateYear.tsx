@@ -144,6 +144,7 @@ const CreateYear = ({ loaderData }: Route.ComponentProps) => {
           ))}
         </div>
       </form>
+      {/* TODO: can only submit if everything's filled in */}
       <button onClick={postYear}>Submit?</button>
     </div>
   );

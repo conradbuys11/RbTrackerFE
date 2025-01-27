@@ -22,6 +22,7 @@ const NewGameEntry = ({ weekNo, game, teams, updateGames }: NGEProps) => {
         onChange={(e) =>
           updateGames(game.id, weekNo, "awayTeam", +e.target.value)
         }
+        value={game.awayTeam?.id}
         required
       >
         <option value={undefined}></option>
@@ -35,6 +36,7 @@ const NewGameEntry = ({ weekNo, game, teams, updateGames }: NGEProps) => {
         onChange={(e) =>
           updateGames(game.id, weekNo, "homeTeam", +e.target.value)
         }
+        value={game.homeTeam?.id}
         required
       >
         <option value={undefined}></option>
