@@ -28,9 +28,6 @@ export function Welcome() {
             <p>
               <Link to={`/CreateYear`}>Create Year</Link>
             </p>
-            <p>
-              <Link to={`/DataEntryWeek`}>Data Entry Week</Link>
-            </p>
             <ul>
               {resources.map(({ href, text, icon }) => (
                 <li key={href}>

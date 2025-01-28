@@ -3,6 +3,7 @@ import type { Team } from "../classes/Team";
 import type { NewGame } from "~/classes/NewGame";
 import { newGameToDto, type GameDto } from "~/classes/GameDto";
 import type { TeamInYear } from "~/classes/TeamInYear";
+import type { Year } from "~/classes/Year";
 
 const URL = `https://localhost:7242/api/Rb`;
 
@@ -12,7 +13,17 @@ export const getTeams = async () => {
   return json as Team[];
 };
 
-export const getYearFullData = async (yearId: number) => {};
+export const getYear = async (yearId: string) => {
+  const res = await fetch(`${URL}/years/${yearId}/full`);
+  const json = await res.json();
+  return json as Year;
+};
+
+export const getTeamsOfYear = async (yearId: string) => {
+  const res = await fetch(`${URL}/teamsinyears/many/${yearId}`);
+  const json = await res.json();
+  return json as TeamInYear[];
+};
 
 export const submitYearGames = async (
   weeks: NewWeek[],
@@ -46,7 +57,7 @@ export const submitYearGames = async (
         });
       })
       .then((res) => res.json())
-      .then((data) => {
+      .then(() => {
         console.log(`Success!`);
         teams = checkWeekByes(week, teams);
       })
@@ -58,36 +69,6 @@ export const submitYearGames = async (
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(teams),
   });
-};
-
-const addByesToTeams = async (weeks: NewWeek[], teams: TeamInYear[]) => {
-  // byes are only present in weeks 6-14 (indexes 5-13)
-  const byeWeeks = weeks.slice(5, 14);
-  teams.forEach((team) => {
-    weeks: for (let i = 0; i < byeWeeks.length; i++) {
-      const week = byeWeeks[i];
-      for (let j = 0; j < week.games.length; j++) {
-        // cycle through each game in a week.
-        // if there is any game during the week that has the team in it, this isn't their bye week, so go to the next week.
-        // if we get through every game in a week and don't find the team, it's their bye week. assign it to them then stop looking.
-        const game = week.games[j];
-        if (game.awayTeam == team || game.homeTeam == team) {
-          continue weeks;
-        }
-        if (j + 1 == week.games.length) {
-          console.log(`${team.teamName} has their bye on week ${week.weekNo}.`);
-          team.byeId = week.id;
-          break weeks;
-        }
-      }
-    }
-  });
-  const res = await fetch(`${URL}/teaminyears/many`, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(teams),
-  });
-  const json = await res.json();
 };
 
 const checkWeekByes = (week: NewWeek, teams: TeamInYear[]) => {

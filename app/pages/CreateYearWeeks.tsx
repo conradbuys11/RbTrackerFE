@@ -9,6 +9,7 @@ import NewWeekEntry from "~/components/NewWeekEntry";
 import { useLocation } from "react-router";
 import { submitYearGames } from "~/db/dbFuncs";
 import testPopulate from "~/db/testPopulate";
+import { useNavigate } from "react-router";
 
 interface NavState {
   year: Year;
@@ -38,9 +39,10 @@ const CreateYearWeeks = () => {
   const state = location.state as NavState;
   const { year, teams } = state || {};
   const [weeks, setWeeks] = useState<NewWeek[]>([]);
+  const navigate = useNavigate();
 
   const submit = () => {
-    submitYearGames(weeks, teams);
+    submitYearGames(weeks, teams).then(() => navigate(`/year/${year.id}`));
   };
 
   const updateGames = (

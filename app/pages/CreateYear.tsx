@@ -57,6 +57,7 @@ const CreateYear = ({ loaderData }: Route.ComponentProps) => {
     );
   };
 
+  // TODO: refactor into a db func
   const postYear = async () => {
     let year: Year;
     let teams: TeamInYear[];
@@ -81,7 +82,7 @@ const CreateYear = ({ loaderData }: Route.ComponentProps) => {
       })
       .then((res) => res.json())
       .then((data: TeamInYear[]) => (teams = data))
-      .then((a) =>
+      .then(() =>
         navigate("/createyearweeks", {
           state: { year: year, teams: teams } as NavState,
         })
