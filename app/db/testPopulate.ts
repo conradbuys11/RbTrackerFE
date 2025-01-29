@@ -1,5 +1,7 @@
 import type { NewWeek } from "~/classes/NewWeek";
 import type { TeamInYear } from "~/classes/TeamInYear";
+import type { TiyDtoCreateWeeksGet } from "~/classes/TeamInYear/TiyDtoCreateWeeksGet";
+import type { WeekDtoCreateWeeks } from "~/classes/Week/WeekDtoCreateWeeks";
 
 interface G {
   awayTeamId: number;
@@ -385,7 +387,10 @@ const tWeeks = [
   ],
 ];
 
-const testPopulate = (weeks: NewWeek[], teams: TeamInYear[]) => {
+const testPopulate = (
+  weeks: WeekDtoCreateWeeks[],
+  teams: TiyDtoCreateWeeksGet[]
+) => {
   return weeks.map((week, i) => ({
     ...week,
     games: week.games.map((game, j) => {

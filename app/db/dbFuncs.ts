@@ -4,6 +4,11 @@ import type { NewGame } from "~/classes/NewGame";
 import { newGameToDto, type GameDto } from "~/classes/GameDto";
 import type { TeamInYear } from "~/classes/TeamInYear";
 import type { Year } from "~/classes/Year";
+import type { TeamDtoCreateYear } from "~/classes/Team/TeamDtoCreateYear";
+import type { YearDtoCreateYear } from "~/classes/Year/YearDtoCreateYear";
+import type { TiyDtoCreateYear } from "~/classes/TeamInYear/TiyDtoCreateYear";
+import type { YearDtoCreateWeeks } from "~/classes/Year/YearDtoCreateWeeks";
+import type { TiyDtoCreateWeeksGet } from "~/classes/TeamInYear/TiyDtoCreateWeeksGet";
 
 const URL = `https://localhost:7242/api/Rb`;
 
@@ -91,4 +96,36 @@ const checkWeekByes = (week: NewWeek, teams: TeamInYear[]) => {
     }
     return team;
   });
+};
+
+//
+//
+//
+
+export const createYearGetTeams = async () => {
+  const res = await fetch(`${URL}/createyear/teams`);
+  const json = await res.json();
+  return json as TeamDtoCreateYear[];
+};
+
+export const createYearPostYearAndTeams = async (
+  year: YearDtoCreateYear,
+  teams: TiyDtoCreateYear[]
+) => {
+  const yearRes = await fetch(`${URL}/createyear/years`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(year),
+  });
+  const yearJson = (await yearRes.json()) as YearDtoCreateWeeks;
+
+  teams = teams.map((team) => ({ ...team, yearId: yearJson.id }));
+
+  const teamsRes = await fetch(`${URL}/createyear/teaminyears`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(teams),
+  });
+  const teamsJson = (await teamsRes.json()) as TiyDtoCreateWeeksGet[];
+  return { yearJson, teamsJson };
 };
