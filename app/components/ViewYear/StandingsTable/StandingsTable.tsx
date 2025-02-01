@@ -1,9 +1,10 @@
 import { Conference } from "~/enums/conference";
 import ConfStandings from "./ConfStandings";
 import type { TeamInYear } from "~/classes/TeamInYear";
+import type { TiyDtoViewYear } from "~/classes/TeamInYear/TiyDtoViewYear";
 
 interface TableProps {
-  teams: TeamInYear[];
+  teams: TiyDtoViewYear[];
 }
 
 const StandingsTable = ({ teams }: TableProps) => {

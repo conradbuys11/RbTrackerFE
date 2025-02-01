@@ -1,10 +1,6 @@
-import type { TeamInYear } from "~/classes/TeamInYear";
-import type { Year } from "~/classes/Year";
-import { newGame, type NewGame } from "~/classes/NewGame";
 import { byesPerWeek } from "~/data/byesPerWeek";
 import { GameType } from "~/enums/gameType";
 import { useEffect, useState } from "react";
-import { newWeek, type NewWeek } from "~/classes/NewWeek";
 import NewWeekEntry from "~/components/NewWeekEntry";
 import { useLocation } from "react-router";
 import { submitYearGames } from "~/db/dbFuncs";
@@ -35,7 +31,7 @@ const makeRegSeasonWeeks = (yearId: number) => {
         homeTeamId: undefined,
       });
     }
-    weeks.push({ weekNo: i + 1, yearId: yearId, games: games });
+    weeks.push({ id: undefined, weekNo: i + 1, yearId: yearId, games: games });
   }
   return weeks;
 };
@@ -92,7 +88,7 @@ const CreateYearWeeks = () => {
           ? {
               ...week,
               games: week.games.map((game) =>
-                game.id == gameId ? { ...game, [teamType]: team } : game
+                game.gid == gameId ? { ...game, [teamType]: team } : game
               ),
             }
           : week

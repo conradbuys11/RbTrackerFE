@@ -1,22 +1,24 @@
 import type { Year } from "~/classes/Year";
 import type { Route } from "./+types/ViewYear";
-import { getTeamsOfYear, getYear } from "~/db/dbFuncs";
+import { getTeamsOfYear, getYear, viewYearGetYear } from "~/db/dbFuncs";
 import StandingsTable from "~/components/ViewYear/StandingsTable/StandingsTable";
 
 export async function clientLoader({ params }: Route.LoaderArgs) {
-  let year = await getYear(params.yearId);
-  let teams = await getTeamsOfYear(params.yearId);
-  return { year, teams };
+  let year = await viewYearGetYear(params.yearId);
+  return { year };
+  // let teams = await getTeamsOfYear(params.yearId);
+  // return { year, teams };
 }
 
 const ViewYear = ({ loaderData }: Route.ComponentProps) => {
-  const { year, teams } = loaderData;
+  const { year } = loaderData;
+  // const { year, teams } = loaderData;
   return (
     <div>
       <h1>Year {year.yearNo}</h1>
       <div>
         <h2>Table of Divisions & Teams: Under construction</h2>
-        <StandingsTable teams={teams} />
+        <StandingsTable teams={year.teams} />
         {/* 
         structure probably looks like: 
         StandingsTable

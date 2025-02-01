@@ -1,4 +1,4 @@
 export interface TiyDtoCreateWeeksPut {
   id: number;
-  byeId: number;
+  byeId: number | undefined;
 }

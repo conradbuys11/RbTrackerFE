@@ -1,12 +1,12 @@
 import type { Conference } from "~/enums/conference";
 import TeamStandings from "./TeamStandings";
 import type { Division } from "~/enums/division";
-import type { TeamInYear } from "~/classes/TeamInYear";
+import type { TiyDtoViewYear } from "~/classes/TeamInYear/TiyDtoViewYear";
 
 interface DivProps {
   conference: Conference;
   division: Division;
-  teams: TeamInYear[];
+  teams: TiyDtoViewYear[];
 }
 
 const DivStandings = ({ conference, division, teams }: DivProps) => {

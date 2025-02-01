@@ -399,8 +399,8 @@ const testPopulate = (
       const homeTeam = teams.find((team) => team.teamId == g.homeTeamId);
       return {
         ...game,
-        awayTeam: awayTeam,
-        homeTeam: homeTeam,
+        awayTeamId: awayTeam?.id,
+        homeTeamId: homeTeam?.id,
       };
     }),
   }));

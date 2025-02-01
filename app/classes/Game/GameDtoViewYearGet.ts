@@ -3,6 +3,6 @@ export interface GameDtoViewYearGet {
   weekId: number;
   awayTeamId: number;
   homeTeamId: number;
-  awayTeamScore: number | undefined;
-  homeTeamScore: number | undefined;
+  awayTeamScore: number | null;
+  homeTeamScore: number | null;
 }

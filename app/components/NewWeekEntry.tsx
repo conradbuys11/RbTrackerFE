@@ -1,13 +1,12 @@
-import { Form } from "react-router";
-import type { NewGame } from "~/classes/NewGame";
-import type { TeamInYear } from "~/classes/TeamInYear";
 import NewGameEntry from "./NewGameEntry";
+import type { GameDtoCreateWeeks } from "~/classes/Game/GameDtoCreateWeeks";
+import type { TiyDtoCreateWeeksGet } from "~/classes/TeamInYear/TiyDtoCreateWeeksGet";
 
 interface NWEProps {
   key: string;
   weekNo: number;
-  games: NewGame[];
-  teams: TeamInYear[];
+  games: GameDtoCreateWeeks[];
+  teams: TiyDtoCreateWeeksGet[];
   updateGames: (
     gameId: string,
     weekNo: number,
@@ -23,7 +22,7 @@ const NewWeekEntry = ({ weekNo, games, teams, updateGames }: NWEProps) => {
       {games.map((game) => {
         return (
           <NewGameEntry
-            key={game.id}
+            key={game.gid}
             weekNo={weekNo}
             game={game}
             teams={teams}

@@ -1,11 +1,11 @@
-import type { NewGame } from "~/classes/NewGame";
-import type { TeamInYear } from "~/classes/TeamInYear";
+import type { GameDtoCreateWeeks } from "~/classes/Game/GameDtoCreateWeeks";
+import type { TiyDtoCreateWeeksGet } from "~/classes/TeamInYear/TiyDtoCreateWeeksGet";
 
 interface NGEProps {
   key: string;
   weekNo: number;
-  game: NewGame;
-  teams: TeamInYear[];
+  game: GameDtoCreateWeeks;
+  teams: TiyDtoCreateWeeksGet[];
   updateGames: (
     gameId: string,
     weekNo: number,
@@ -20,9 +20,9 @@ const NewGameEntry = ({ weekNo, game, teams, updateGames }: NGEProps) => {
       <select
         name="awayTeam"
         onChange={(e) =>
-          updateGames(game.id, weekNo, "awayTeam", +e.target.value)
+          updateGames(game.gid, weekNo, "awayTeam", +e.target.value)
         }
-        value={game.awayTeam?.id}
+        value={game.awayTeamId}
         required
       >
         <option value={undefined}></option>
@@ -34,9 +34,9 @@ const NewGameEntry = ({ weekNo, game, teams, updateGames }: NGEProps) => {
       <select
         name="homeTeam"
         onChange={(e) =>
-          updateGames(game.id, weekNo, "homeTeam", +e.target.value)
+          updateGames(game.gid, weekNo, "homeTeam", +e.target.value)
         }
-        value={game.homeTeam?.id}
+        value={game.homeTeamId}
         required
       >
         <option value={undefined}></option>
