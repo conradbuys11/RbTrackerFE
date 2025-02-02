@@ -1,8 +1,14 @@
 import { Link } from "react-router";
 import logoDark from "./logo-dark.svg";
 import logoLight from "./logo-light.svg";
+import { getYears } from "~/db/dbFuncs";
+import type { Year } from "~/classes/Year";
 
-export function Welcome() {
+interface WelcomeProps {
+  years: Year[];
+}
+
+export function Welcome({ years }: WelcomeProps) {
   return (
     <main className="flex items-center justify-center pt-16 pb-4">
       <div className="flex-1 flex flex-col items-center gap-16 min-h-0">
@@ -28,6 +34,10 @@ export function Welcome() {
             <p>
               <Link to={`/CreateYear`}>Create Year</Link>
             </p>
+            <p>Existing Years:</p>
+            {years.map((year) => (
+              <Link to={`/year/${year.id}`}>Year {year.yearNo}</Link>
+            ))}
             <ul>
               {resources.map(({ href, text, icon }) => (
                 <li key={href}>

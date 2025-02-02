@@ -3,7 +3,7 @@ import { GameType } from "~/enums/gameType";
 import { useEffect, useState } from "react";
 import NewWeekEntry from "~/components/NewWeekEntry";
 import { useLocation } from "react-router";
-import { submitYearGames } from "~/db/dbFuncs";
+import { submitYearWeeks } from "~/db/dbFuncs";
 import testPopulate from "~/db/testPopulate";
 import { useNavigate } from "react-router";
 import type { YearDtoCreateWeeks } from "~/classes/Year/YearDtoCreateWeeks";
@@ -26,7 +26,6 @@ const makeRegSeasonWeeks = (yearId: number) => {
       games.push({
         gid: `w${i + 1}g${j + 1}`,
         gameType: GameType.RegularSeason,
-        weekId: 0,
         awayTeamId: undefined,
         homeTeamId: undefined,
       });
@@ -69,7 +68,8 @@ const CreateYearWeeks = () => {
   const navigate = useNavigate();
 
   const submit = () => {
-    submitYearGames(weeks, teams).then(() => navigate(`/year/${year.id}`));
+    submitYearWeeks(weeks).then(() => navigate(`/year/${year.id}`));
+    // submitYearGames(weeks, teams).then(() => navigate(`/year/${year.id}`));
   };
 
   const updateGames = (
