@@ -7,15 +7,16 @@ interface DivProps {
   conference: Conference;
   division: Division;
   teams: TiyDtoViewYear[];
+  byeWeek: (weekId: number) => number | undefined;
 }
 
-const DivStandings = ({ conference, division, teams }: DivProps) => {
+const DivStandings = ({ conference, division, teams, byeWeek }: DivProps) => {
+  const divTeams = teams.filter((team) => team.division == division);
   return (
     <>
-      <TeamStandings />
-      <TeamStandings />
-      <TeamStandings />
-      <TeamStandings />
+      {divTeams.map((team) => (
+        <TeamStandings key={`t${team.id}`} team={team} byeWeek={byeWeek} />
+      ))}
     </>
   );
 };

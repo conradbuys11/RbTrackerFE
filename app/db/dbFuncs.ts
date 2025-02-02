@@ -38,6 +38,8 @@ export const submitYearGames = async (
   weeks: WeekDtoCreateWeeks[],
   teams: TiyDtoCreateWeeksGet[]
 ) => {
+  // there's almost certainly a way to clean this up... i probably don't need 4 fetch calls?
+
   // first, add the week
   // we get back just the id from the week, which we then feed to
   // then, make all games in that week's game array have the id that's been returned via data
@@ -75,12 +77,19 @@ export const submitYearGames = async (
       })
       .catch((e) => console.log(`Error when submitting weeks & games: ${e}`));
   }
-  console.log(JSON.stringify(teamsPut));
   const byesResponse = await fetch(`${URL}/createweeks/teaminyears`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(teamsPut),
   });
+  const calcLikelyRecords = await fetch(
+    `${URL}/createweeks/likelyrecord/year/${weeks[0].yearId}`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(weeks[0].yearId),
+    }
+  );
 };
 
 const checkWeekByes = (
