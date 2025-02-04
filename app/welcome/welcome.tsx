@@ -1,8 +1,8 @@
 import { Link } from "react-router";
 import logoDark from "./logo-dark.svg";
 import logoLight from "./logo-light.svg";
-import { getYears } from "~/db/dbFuncs";
 import type { Year } from "~/classes/Year";
+import CollapseTest from "~/components/CollapseTest";
 
 interface WelcomeProps {
   years: Year[];
@@ -31,13 +31,20 @@ export function Welcome({ years }: WelcomeProps) {
             <p className="leading-6 text-gray-700 dark:text-gray-200 text-center">
               What&apos;s next?
             </p>
+            <CollapseTest title={"Test"} open>
+              <p>Test</p>
+            </CollapseTest>
             <p>
               <Link to={`/CreateYear`}>Create Year</Link>
             </p>
-            <p>Existing Years:</p>
-            {years.map((year) => (
-              <Link to={`/year/${year.id}`}>Year {year.yearNo}</Link>
-            ))}
+            {years.length > 0 ? (
+              <>
+                <p>Existing Years:</p>
+                {years.map((year) => (
+                  <Link to={`/year/${year.id}`}>Year {year.yearNo}</Link>
+                ))}
+              </>
+            ) : null}
             <ul>
               {resources.map(({ href, text, icon }) => (
                 <li key={href}>

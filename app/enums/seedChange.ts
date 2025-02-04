@@ -13,6 +13,5 @@ export enum SeedChange {
   UP4,
   UP5,
   UP6,
-  UP7,
   NEW,
 }

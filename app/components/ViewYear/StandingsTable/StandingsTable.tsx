@@ -13,28 +13,28 @@ const StandingsTable = ({ teams, byeWeek }: TableProps) => {
       <table>
         <thead>
           <tr>
-            <th></th>
-            <th>Team</th>
-            <th>OF</th>
-            <th>DF</th>
-            <th>Av</th>
-            <th>Record</th>
-            <th>Expected Record</th>
-            <th>Bye Week</th>
+            <th className="px-2"></th>
+            <th className="px-2">Team</th>
+            <th className="px-2">OF</th>
+            <th className="px-2">DF</th>
+            <th className="px-2">Av</th>
+            <th className="px-2">Record</th>
+            <th className="px-2">Expected Record</th>
+            <th className="px-2">Bye Week</th>
+            <th className="px-2">Seed</th>
+            <th className="px-2">Outcome</th>
           </tr>
         </thead>
-        <tbody>
-          <ConfStandings
-            conference={Conference.AFC}
-            teams={teams}
-            byeWeek={byeWeek}
-          />
-          <ConfStandings
-            conference={Conference.NFC}
-            teams={teams}
-            byeWeek={byeWeek}
-          />
-        </tbody>
+        <ConfStandings
+          conference={Conference.AFC}
+          teams={teams}
+          byeWeek={byeWeek}
+        />
+        <ConfStandings
+          conference={Conference.NFC}
+          teams={teams}
+          byeWeek={byeWeek}
+        />
       </table>
     </div>
   );

@@ -8,6 +8,7 @@ import type { YearDtoCreateWeeks } from "~/classes/Year/YearDtoCreateWeeks";
 import type { TiyDtoCreateWeeksGet } from "~/classes/TeamInYear/TiyDtoCreateWeeksGet";
 import type { WeekDtoCreateWeeks } from "~/classes/Week/WeekDtoCreateWeeks";
 import type { YearDtoViewYear } from "~/classes/Year/YearDtoViewYear";
+import type { GameDtoViewYearGetPut } from "~/classes/Game/GameDtoViewYearGetPut";
 
 const URL = `https://localhost:7242/api/Rb`;
 
@@ -186,4 +187,11 @@ export const viewYearGetYear = async (id: string) => {
   const res = await fetch(`${URL}/viewyear/years/${id}`);
   const json = await res.json();
   return json as YearDtoViewYear;
+};
+
+export const updateGamesOfYear = async (
+  yearId: number,
+  games: GameDtoViewYearGetPut[]
+) => {
+  // TODO after updating backend
 };

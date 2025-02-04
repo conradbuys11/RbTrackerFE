@@ -1,27 +1,32 @@
 import type { TiyDtoViewYear } from "~/classes/TeamInYear/TiyDtoViewYear";
-import { avRating, makeRecord } from "~/helpers";
+import { YearResult } from "~/enums/yearResult";
+import { avRating, getEnumName, makeRecord } from "~/helpers";
 
 interface TeamProps {
   team: TiyDtoViewYear;
+  firstColumn: string | undefined;
   byeWeek: (weekId: number) => number | undefined;
 }
 
-const TeamStandings = ({ team, byeWeek }: TeamProps) => {
+const TeamStandings = ({ team, firstColumn, byeWeek }: TeamProps) => {
   return (
     <tr>
-      <td></td>
-      <td>{team.teamName}</td>
-      <td>{team.ofRating}</td>
-      <td>{team.dfRating}</td>
-      <td>{avRating(team.ofRating, team.dfRating)}</td>
-      <td>{makeRecord(team.wins, team.losses, team.ties)}</td>
-      <td>{makeRecord(team.likelyWins, team.likelyLosses, team.likelyTies)}</td>
-      <td>{byeWeek(team.byeId)}</td>
-      {/* {team.teamName}. OfRating {team.ofRating}. DfRating {team.dfRating}.
-      AvRating {(team.ofRating + team.dfRating) / 2}. Record{" "}
-      {makeRecord(team.wins, team.losses, team.ties)}. Likely Record{" "}
-      {makeRecord(team.likelyWins, team.likelyLosses, team.likelyTies)}. Bye on
-      Week {byeWeek(team.byeId)}. */}
+      <th className="px-2">{firstColumn ?? ""}</th>
+      <td className="px-2">{team.teamName}</td>
+      <td className="px-2">{team.ofRating}</td>
+      <td className="px-2">{team.dfRating}</td>
+      <td className="px-2">{avRating(team.ofRating, team.dfRating)}</td>
+      <td className="px-2">{makeRecord(team.wins, team.losses, team.ties)}</td>
+      <td className="px-2">
+        {makeRecord(team.likelyWins, team.likelyLosses, team.likelyTies)}
+      </td>
+      <td className="px-2">{byeWeek(team.byeId)}</td>
+      <td className="px-2">{team.seed > 0 ? team.seed : null}</td>
+      <td className="px-2">
+        {team.result == YearResult.None
+          ? null
+          : getEnumName(YearResult, team.result)}
+      </td>
     </tr>
   );
 };

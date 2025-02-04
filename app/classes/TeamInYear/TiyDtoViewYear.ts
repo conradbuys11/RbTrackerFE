@@ -1,5 +1,6 @@
 import type { Conference } from "~/enums/conference";
 import type { Division } from "~/enums/division";
+import type { YearResult } from "~/enums/yearResult";
 
 export interface TiyDtoViewYear {
   id: number;
@@ -15,4 +16,6 @@ export interface TiyDtoViewYear {
   likelyLosses: number;
   likelyTies: number;
   byeId: number;
+  seed: number;
+  result: YearResult;
 }

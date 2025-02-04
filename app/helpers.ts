@@ -7,3 +7,10 @@ export const makeRecord = (w: number, l: number, t: number) => {
 export const avRating = (of: number, df: number) => {
   return (of + df) / 2;
 };
+
+export const getEnumName = (
+  enumType: any,
+  enumValue: number | string
+): string | undefined => {
+  return Object.keys(enumType).find((key) => enumType[key] === enumValue);
+};

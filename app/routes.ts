@@ -5,5 +5,6 @@ export default [
   route("/createyear", "pages/CreateYear.tsx"),
   route("/createyearweeks", "pages/CreateYearWeeks.tsx"),
   route("/year/:yearId", "pages/ViewYear.tsx"),
+  route("/week/:weekId", "pages/ViewWeek.tsx"),
   route("*?", "catchall.tsx"),
 ] satisfies RouteConfig;

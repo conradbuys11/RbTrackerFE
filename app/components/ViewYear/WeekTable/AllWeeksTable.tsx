@@ -6,9 +6,21 @@ interface TableProps {
   weeks: WeekDtoViewYear[];
   getTeam: (teamId: number) => TiyDtoViewYear | undefined;
   getByes: (weekId: number) => TiyDtoViewYear[];
+  updateGames: (
+    gameId: number,
+    scoreType: "awayTeam" | "homeTeam",
+    score: number
+  ) => void;
+  editGames: boolean;
 }
 
-const AllWeeksTable = ({ weeks, getTeam, getByes }: TableProps) => {
+const AllWeeksTable = ({
+  weeks,
+  getTeam,
+  getByes,
+  updateGames,
+  editGames,
+}: TableProps) => {
   return (
     <>
       {weeks.map((week) => (
@@ -17,6 +29,8 @@ const AllWeeksTable = ({ weeks, getTeam, getByes }: TableProps) => {
           week={week}
           getTeam={getTeam}
           getByes={getByes}
+          updateGames={updateGames}
+          editGames={editGames}
         />
       ))}
     </>
